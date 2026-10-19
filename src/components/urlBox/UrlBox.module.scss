@@ -1,0 +1,44 @@
+.container {
+  width: 80%;
+  margin: 50px auto;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  .label {
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  form {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 10px 0;
+
+    input {
+      flex-grow: 1;
+      padding: 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 5px;
+      outline: none;
+      transition:
+        border-color 250ms ease,
+        box-shadow 250ms ease;
+
+      &:focus {
+        border-color: #0d9488;
+        box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+      }
+    }
+
+    .submit {
+      border: 1px solid transparent;
+      border-radius: 5px;
+      padding: 14px 28px;
+      background: #0d9488;
+      color: #fff;
+      cursor: pointer;
+    }
+  }
+}

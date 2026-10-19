@@ -1,0 +1,24 @@
+.navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 20px max(24px, calc((100% - 1400px) / 2));
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+
+  .navList {
+    display: flex;
+    gap: 40px;
+    list-style-type: none;
+
+    .navLogo {
+      font-size: 24px;
+      font-weight: 600 !important;
+    }
+
+    .navItem {
+      font-weight: 400;
+    }
+  }
+}

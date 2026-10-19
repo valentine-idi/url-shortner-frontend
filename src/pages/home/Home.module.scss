@@ -1,0 +1,18 @@
+.container {
+  width: 100%;
+  margin: 60px auto;
+  .headerContainer {
+    text-align: center;
+    margin: 20px 0;
+
+    p:first-child {
+      font-weight: 600;
+      font-size: 46px;
+    }
+
+    p:last-child {
+      font-weight: 400;
+      font-size: 20px;
+    }
+  }
+}
