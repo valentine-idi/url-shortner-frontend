@@ -1,9 +1,17 @@
 .container {
   width: 100%;
   margin: 60px auto;
+  height: calc(100vh - 200px);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
+
   .headerContainer {
     text-align: center;
-    margin: 20px 0;
+    margin: 0px 0;
 
     p:first-child {
       font-weight: 600;
