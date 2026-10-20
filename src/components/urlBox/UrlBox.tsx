@@ -1,5 +1,8 @@
 import { useState, useRef } from "react";
+import { FaRegCopy, FaCheckCircle } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa6";
 import { shortenLinksService, type Data } from "../../services/services";
+import Icon from "../Icon";
 import isValidUrl from "../../utils/isValidUrl";
 import styles from "./UrlBox.module.scss";
 
@@ -87,11 +90,30 @@ function UrlBox() {
       {error && <p className={styles.error}>{error.message}</p>}
 
       <div className={`${styles.result} ${data && styles.block}`}>
-        <p>Your short link is ready</p>
+        <p>
+          <Icon
+            className={`${styles.icon} ${styles.iconReady}`}
+            label={FaCheckCircle}
+          />
+          Your short link is ready
+        </p>
 
         <div className={styles.buttonGroup}>
           <button>{data && data.shortUrl}</button>
-          <button onClick={handleCopyText}>{copyStatus}</button>
+          <button onClick={handleCopyText}>
+            {copyStatus.toLocaleLowerCase() === "copy link" && (
+              <Icon className={styles.icon} label={FaRegCopy} />
+            )}
+
+            {copyStatus.toLocaleLowerCase() === "copied!" && (
+              <Icon
+                className={`${styles.icon} ${styles.copiedIcon}`}
+                label={FaCheck}
+              />
+            )}
+
+            {copyStatus}
+          </button>
         </div>
       </div>
     </div>
