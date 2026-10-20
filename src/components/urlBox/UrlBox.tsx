@@ -1,14 +1,7 @@
 import { useState, useRef } from "react";
-import axios from "axios";
+import { shortenLinksService, type Data } from "../../services/services";
 import isValidUrl from "../../utils/isValidUrl";
 import styles from "./UrlBox.module.scss";
-
-interface Data {
-  shortCode: string;
-  originalUrl: string;
-  shortUrl: string;
-  user: string;
-}
 
 interface Error {
   message: string;
@@ -29,10 +22,7 @@ function UrlBox() {
       setIsBackendCalled(true);
       setShortenButtonText("Shortening...");
 
-      const { data } = await axios.post<Data>(
-        "http://localhost:3000/api/links",
-        backendData,
-      );
+      const { data } = await shortenLinksService.post(backendData);
 
       setError(null);
       setData(data);
