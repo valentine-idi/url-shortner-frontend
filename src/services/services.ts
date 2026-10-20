@@ -1,5 +1,6 @@
 import HttpService from "./http-service";
 
+// This is for ShortenLink
 export interface Data {
   shortCode: string;
   originalUrl: string;
