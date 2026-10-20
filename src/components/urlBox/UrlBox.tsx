@@ -1,4 +1,6 @@
 import { useState, useRef } from "react";
+import axios from "axios";
+import isValidUrl from "../../utils/isValidUrl";
 import styles from "./UrlBox.module.scss";
 
 interface Data {
@@ -8,14 +10,71 @@ interface Data {
   user: string;
 }
 
+interface Error {
+  message: string;
+}
+
 function UrlBox() {
   const [data, setData] = useState<Data | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+  const [isBackendCalled, setIsBackendCalled] = useState(false);
+  const [shortenButtonText, setShortenButtonText] = useState("Shorten Link");
+  const [copyStatus, setCopyStatus] = useState("Copy Link");
 
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const callBackend = async (url: string) => {
+    const backendData = { link: url };
+    try {
+      setIsBackendCalled(true);
+      setShortenButtonText("Shortening...");
+
+      const { data } = await axios.post<Data>(
+        "http://localhost:3000/api/links",
+        backendData,
+      );
+
+      setError(null);
+      setData(data);
+      setIsBackendCalled(false);
+      setShortenButtonText("Shorten Link");
+
+      if (inputRef.current) inputRef.current.value = "";
+    } catch (error) {
+      if (error instanceof Error) setError({ message: error.message });
+
+      setIsBackendCalled(false);
+      setShortenButtonText("Shorten Link");
+    }
+  };
+
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const url = inputRef.current?.value;
+
+    setData(null);
+
+    if (!inputRef.current) return;
+
+    const url = inputRef.current.value;
+    const isUrlValid = isValidUrl(url);
+
+    if (!isUrlValid) return setError({ message: "Please enter a valid url" });
+
+    callBackend(url);
+  };
+
+  const handleCopyText = async () => {
+    if (!data) return;
+
+    try {
+      await navigator.clipboard.writeText(data.shortUrl);
+      setCopyStatus("Copied!");
+
+      setTimeout(() => setCopyStatus("Copy Link"), 2000);
+    } catch (error) {
+      setCopyStatus("Failed to copy");
+      setTimeout(() => setCopyStatus("Copy Link"), 2000);
+    }
   };
 
   return (
@@ -27,15 +86,22 @@ function UrlBox() {
           placeholder="https://example.com/your-very-long-link"
           ref={inputRef}
         />
-        <button className={styles.submit}>Shorten Link</button>
+        <button
+          className={`${styles.submit} ${isBackendCalled && styles.disabled}`}
+          disabled={isBackendCalled}
+        >
+          {shortenButtonText}
+        </button>
       </form>
+
+      {error && <p className={styles.error}>{error.message}</p>}
 
       <div className={`${styles.result} ${data && styles.block}`}>
         <p>Your short link is ready</p>
 
         <div className={styles.buttonGroup}>
           <button>{data && data.shortUrl}</button>
-          <button>Copy link</button>
+          <button onClick={handleCopyText}>{copyStatus}</button>
         </div>
       </div>
     </div>
