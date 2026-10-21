@@ -5,8 +5,9 @@ import RecentLinks from "../../components/recentLinks";
 import styles from "./Home.module.scss";
 
 function Home() {
-  const [recentLinks, setRecentLinks] = useState<Data[] | null>(null);
+  const [recentLinks, setRecentLinks] = useState<Data[]>([]);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [copiedUrl, setCopiedUrl] = useState("");
 
   useEffect(() => {
     getRecentLinks();
@@ -24,8 +25,6 @@ function Home() {
     localStorage.setItem("recentLinks", parsedRecentLinks);
   };
 
-  console.log("recentLinks", localStorage.getItem("recentLinks"));
-
   const getRecentLinks = () => {
     const recentLinks = localStorage.getItem("recentLinks");
 
@@ -35,8 +34,22 @@ function Home() {
     setRecentLinks(parsedRecentLinks);
   };
 
+  const handleCopy = async (shortUrl: string) => {
+    try {
+      await navigator.clipboard.writeText(shortUrl);
+      setCopiedUrl(shortUrl);
+
+      setTimeout(() => setCopiedUrl(""), 2000);
+    } catch (error) {
+      setCopiedUrl("");
+    }
+  };
+
   const handleRecentLink = (data: Data) =>
     setRecentLinks((prevLinks) => (prevLinks ? [data, ...prevLinks] : [data]));
+
+  const handleDelete = (shortUrl: string) =>
+    setRecentLinks(recentLinks.filter((link) => link.shortUrl !== shortUrl));
 
   return (
     <div className={styles.container}>
@@ -45,7 +58,12 @@ function Home() {
         <p>Shorten, share and keep track of your links</p>
       </header>
       <UrlBox setRecentLinks={handleRecentLink} />
-      <RecentLinks recentLinks={recentLinks} />
+      <RecentLinks
+        copiedUrl={copiedUrl}
+        recentLinks={recentLinks}
+        handleDelete={handleDelete}
+        handleCopy={handleCopy}
+      />
     </div>
   );
 }

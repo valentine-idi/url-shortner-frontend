@@ -1,4 +1,5 @@
 import { FaLink } from "react-icons/fa";
+import { GiHamburgerMenu } from "react-icons/gi";
 import Icon from "../Icon";
 import styles from "./NavBar.module.scss";
 
@@ -15,8 +16,11 @@ function NavBar() {
       </ul>
 
       <ul className={`${styles.right} ${styles.navList}`}>
-        <li className={styles.navItem}>My Links</li>
-        <li className={styles.navItem}>About</li>
+        <li className={styles.navItem}>Log in</li>
+        <li className={styles.navItem}>Sign up</li>
+        <li className={styles.navItem}>
+          <Icon label={GiHamburgerMenu} className={styles.hamburger} />
+        </li>
       </ul>
     </nav>
   );
