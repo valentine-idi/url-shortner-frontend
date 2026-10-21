@@ -10,7 +10,11 @@ interface Error {
   message: string;
 }
 
-function UrlBox() {
+interface Props {
+  setRecentLinks: (data: Data) => void;
+}
+
+function UrlBox({ setRecentLinks }: Props) {
   const [data, setData] = useState<Data | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [isBackendCalled, setIsBackendCalled] = useState(false);
@@ -20,17 +24,17 @@ function UrlBox() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const callBackend = async (url: string) => {
-    const backendData = { link: url };
     try {
       setIsBackendCalled(true);
       setShortenButtonText("Shortening...");
 
-      const { data } = await shortenLinksService.post(backendData);
+      const { data } = await shortenLinksService.post({ link: url });
 
       setError(null);
       setData(data);
       setIsBackendCalled(false);
       setShortenButtonText("Shorten Link");
+      setRecentLinks(data);
 
       if (inputRef.current) inputRef.current.value = "";
     } catch (error) {
