@@ -2,7 +2,11 @@ import { useState, useRef } from "react";
 import { FaRegCopy, FaCheckCircle } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa6";
 import { isAxiosError } from "../../services/apiClient";
-import { shortenLinksService, type Data } from "../../services/services";
+import {
+  type BackendPostData,
+  shortenLinksService,
+  type Data,
+} from "../../services/services";
 import Icon from "../Icon";
 import isValidUrl from "../../utils/isValidUrl";
 import styles from "./UrlBox.module.scss";
@@ -29,7 +33,9 @@ function UrlBox({ setRecentLinks }: Props) {
       setIsBackendCalled(true);
       setShortenButtonText("Shortening...");
 
-      const { data } = await shortenLinksService.post({ link: url });
+      const { data } = await shortenLinksService.post<BackendPostData>({
+        link: url,
+      });
 
       setError(null);
       setData(data);

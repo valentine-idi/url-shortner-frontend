@@ -22,7 +22,7 @@ export default function Login() {
   const callBackend = async (userData: UserPostData) => {
     console.log("userData", userData);
     try {
-      const { data } = await userLoginService.post(userData);
+      const { data } = await userLoginService.post<UserPostData>(userData);
       auth?.setCurrentUser(data);
 
       sessionStorage.setItem("currentUser", JSON.stringify(data));

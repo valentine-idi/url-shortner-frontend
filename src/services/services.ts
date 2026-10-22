@@ -13,13 +13,11 @@ export interface Data {
   user: string;
 }
 
-interface BackendPostData {
+export interface BackendPostData {
   link: string;
 }
 
-export const shortenLinksService = new HttpService<Data, BackendPostData>(
-  "/api/links",
-);
+export const shortenLinksService = new HttpService<Data>("/api/links");
 
 //interface for userLoginService
 interface User {
@@ -42,7 +40,6 @@ export interface UserPostData {
   password: string;
 }
 
-export const userLoginService = new HttpService<
-  UserLoginResponse,
-  UserPostData
->("/api/users/login");
+export const userLoginService = new HttpService<UserLoginResponse>(
+  "/api/users/login",
+);
