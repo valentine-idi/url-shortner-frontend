@@ -1,9 +1,63 @@
+import { useRef, useState, useContext } from "react";
+import { isAxiosError } from "../../services/apiClient";
 import { NavLink } from "react-router";
+import AuthContext from "../../contexts/AuthContext";
+import { type UserPostData, userLoginService } from "../../services/services";
 import { FiLink, FiLogIn, FiEye } from "react-icons/fi";
 import Icon from "../../components/Icon";
 import styles from "./Login.module.scss";
 
 export default function Login() {
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    apiError: "",
+  });
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const defaultErrors = { email: "", password: "", apiError: "" };
+
+  const auth = useContext(AuthContext);
+
+  const callBackend = async (userData: UserPostData) => {
+    console.log("userData", userData);
+    try {
+      const { data } = await userLoginService.post(userData);
+      auth?.setCurrentUser(data);
+
+      sessionStorage.setItem("currentUser", JSON.stringify(data));
+    } catch (error) {
+      if (isAxiosError(error))
+        setErrors({ ...defaultErrors, apiError: error.response?.data.message });
+    }
+  };
+
+  const validateInput = (email: string, password: string) => {
+    const newErrors = { ...defaultErrors };
+
+    if (!email) newErrors.email = "Email is required";
+    if (!password) newErrors.password = "Password is required";
+
+    const hasValue = Object.values(newErrors).some((value) => value !== "");
+
+    return hasValue ? newErrors : null;
+  };
+
+  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!emailRef.current || !passwordRef.current) return;
+
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+
+    const inputErrors = validateInput(email, password);
+
+    if (inputErrors) return setErrors(inputErrors);
+
+    callBackend({ email, password });
+  };
+
   return (
     <main className={styles.page}>
       <section className={styles.card} aria-labelledby="login-heading">
@@ -13,16 +67,18 @@ export default function Login() {
           <p>Log in to manage your shortened links.</p>
         </header>
 
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.field}>
             <label htmlFor="email">Email address</label>
             <input
               id="email"
               name="email"
-              type="email"
+              type="text"
               placeholder="you@example.com"
               autoComplete="email"
+              ref={emailRef}
             />
+            {errors.email && <p className={styles.error}>{errors.email}</p>}
           </div>
 
           <div className={styles.field}>
@@ -35,6 +91,7 @@ export default function Login() {
                 type="password"
                 placeholder="Enter your password"
                 autoComplete="current-password"
+                ref={passwordRef}
               />
 
               <button
@@ -45,11 +102,16 @@ export default function Login() {
                 <Icon label={FiEye} className={styles.eyeIcon} />
               </button>
             </div>
+            {errors.password && (
+              <p className={styles.error}>{errors.password}</p>
+            )}
           </div>
 
           <NavLink className={styles.forgotPassword} to="/forgot-password">
             Forgot password?
           </NavLink>
+
+          {errors.apiError && <p className={styles.error}>{errors.apiError}</p>}
 
           <button className={styles.submitButton} type="submit">
             <Icon label={FiLogIn} className={styles.loginIcon} />

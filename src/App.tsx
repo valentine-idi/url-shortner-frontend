@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router";
+import AuthProvider from "./components/AuthProvider";
+import GuestRoute from "./components/GuestRoute";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import styles from "./App.module.scss";
@@ -6,15 +8,17 @@ import NavBar from "./components/navbar";
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <NavBar />
       <div className={styles.container}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route element={<GuestRoute />}>
+            <Route path="/login" element={<Login />} />
+          </Route>
         </Routes>
       </div>
-    </>
+    </AuthProvider>
   );
 }
 

@@ -43,6 +43,12 @@
           transform: translateX(3px);
         }
 
+        &.logout {
+          border: 1px solid #cbd5e1;
+          padding: 10px;
+          border-radius: 8px;
+        }
+
         &.signup {
           background: $green;
           color: $white;
@@ -101,6 +107,13 @@
         align-items: center;
         text-decoration: none;
         color: inherit;
+      }
+
+      .logout {
+        border: 1px solid #cbd5e1;
+        text-align: center;
+        padding: 18px 0;
+        border-radius: 8px;
       }
 
       .loginIcon {

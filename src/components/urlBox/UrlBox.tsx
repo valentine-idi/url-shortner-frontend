@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { FaRegCopy, FaCheckCircle } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa6";
+import { isAxiosError } from "../../services/apiClient";
 import { shortenLinksService, type Data } from "../../services/services";
 import Icon from "../Icon";
 import isValidUrl from "../../utils/isValidUrl";
@@ -38,7 +39,8 @@ function UrlBox({ setRecentLinks }: Props) {
 
       if (inputRef.current) inputRef.current.value = "";
     } catch (error) {
-      if (error instanceof Error) setError({ message: error.message });
+      if (isAxiosError(error))
+        setError({ message: error.response?.data.message });
 
       setIsBackendCalled(false);
       setShortenButtonText("Shorten Link");
