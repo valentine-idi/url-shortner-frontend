@@ -1,3 +1,5 @@
+@use "../../styles/abstracts/mixins" as *;
+
 .container {
   width: 100%;
   max-width: 900px;
@@ -49,9 +51,7 @@
   }
 
   .error {
-    background: #fef2f2;
-    color: #b91c1c;
-    border: 1px solid #fecaca;
+    @include error;
     border-radius: 8px;
     padding: 12px 16px;
   }

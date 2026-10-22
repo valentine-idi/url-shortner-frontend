@@ -1,13 +1,18 @@
+import { Routes, Route } from "react-router";
+import Home from "./pages/home";
+import Login from "./pages/login";
 import styles from "./App.module.scss";
 import NavBar from "./components/navbar";
-import Home from "./pages/home";
 
 function App() {
   return (
     <>
       <NavBar />
       <div className={styles.container}>
-        <Home />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
       </div>
     </>
   );
