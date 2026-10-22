@@ -1,6 +1,6 @@
 import apiClient from "./apiClient";
 
-export default class HttpService<T, U> {
+export default class HttpService<T, U = void> {
   private readonly url: string;
 
   constructor(url: string) {
