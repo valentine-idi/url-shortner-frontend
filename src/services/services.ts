@@ -17,7 +17,7 @@ export interface BackendPostData {
   link: string;
 }
 
-export const shortenLinksService = new HttpService<Data>("/api/links");
+export const shortenLinksService = new HttpService("/api/links");
 
 //interface for userLoginService
 interface User {
@@ -30,7 +30,7 @@ export interface CurrentUser {
   token: string;
 }
 
-interface UserLoginResponse {
+export interface UserLoginResponse {
   user: User;
   token: string;
 }
@@ -40,6 +40,16 @@ export interface UserPostData {
   password: string;
 }
 
-export const userLoginService = new HttpService<UserLoginResponse>(
-  "/api/users/login",
-);
+export const userLoginService = new HttpService("/api/users/login");
+
+//userRegisterServivce
+
+export interface RegisterPostData extends UserPostData {
+  name: string;
+}
+
+export interface UserRegisterResponse extends UserPostData {
+  id: string;
+}
+
+export const userRegisterService = new HttpService("/api/users/register");

@@ -68,7 +68,7 @@ function NavBar() {
               <li
                 className={`${styles.navItem} ${styles.bigMenuItem} ${styles.signup}`}
               >
-                <NavLink to="/" className={styles.navLink}>
+                <NavLink to="/signup" className={styles.navLink}>
                   <Icon label={FiUserPlus} className={styles.signupIcon} />
                   Sign up
                 </NavLink>
@@ -111,13 +111,15 @@ function NavBar() {
                 </NavLink>
               </li>
               <li className={`${styles.navItem} ${styles.bigMenuItem} `}>
-                <div className={`${styles.signup}`}>
-                  <Icon
-                    label={FiUserPlus}
-                    className={`${styles.navIcon} ${styles.signupIcon}`}
-                  />
-                  Sign up
-                </div>
+                <NavLink to="/signup">
+                  <div className={`${styles.signup}`}>
+                    <Icon
+                      label={FiUserPlus}
+                      className={`${styles.navIcon} ${styles.signupIcon}`}
+                    />
+                    Sign up
+                  </div>
+                </NavLink>
               </li>
             </>
           )}

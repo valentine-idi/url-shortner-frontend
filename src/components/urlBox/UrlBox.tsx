@@ -33,7 +33,7 @@ function UrlBox({ setRecentLinks }: Props) {
       setIsBackendCalled(true);
       setShortenButtonText("Shortening...");
 
-      const { data } = await shortenLinksService.post<BackendPostData>({
+      const { data } = await shortenLinksService.post<BackendPostData, Data>({
         link: url,
       });
 

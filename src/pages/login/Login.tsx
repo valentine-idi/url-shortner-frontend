@@ -2,7 +2,11 @@ import { useRef, useState, useContext } from "react";
 import { isAxiosError } from "../../services/apiClient";
 import { NavLink } from "react-router";
 import AuthContext from "../../contexts/AuthContext";
-import { type UserPostData, userLoginService } from "../../services/services";
+import {
+  type UserPostData,
+  type UserLoginResponse,
+  userLoginService,
+} from "../../services/services";
 import { FiLink, FiLogIn, FiEye } from "react-icons/fi";
 import Icon from "../../components/Icon";
 import styles from "./Login.module.scss";
@@ -22,7 +26,10 @@ export default function Login() {
   const callBackend = async (userData: UserPostData) => {
     console.log("userData", userData);
     try {
-      const { data } = await userLoginService.post<UserPostData>(userData);
+      const { data } = await userLoginService.post<
+        UserPostData,
+        UserLoginResponse
+      >(userData);
       auth?.setCurrentUser(data);
 
       sessionStorage.setItem("currentUser", JSON.stringify(data));
