@@ -53,7 +53,7 @@ function UrlBox({ setRecentLinks }: Props) {
     }
   };
 
-  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setData(null);
@@ -65,7 +65,7 @@ function UrlBox({ setRecentLinks }: Props) {
 
     if (!isUrlValid) return setError({ message: "Please enter a valid url" });
 
-    callBackend(url);
+    await callBackend(url);
   };
 
   const handleCopyText = async () => {
