@@ -1,0 +1,16 @@
+{
+  "inputs": [
+    {
+      "type": "name",
+      "placeholder": "Your name"
+    },
+    {
+      "type": "email",
+      "placeholder": "you@example.com"
+    },
+    {
+      "type": "password",
+      "placeholder": "Create a password"
+    }
+  ]
+}

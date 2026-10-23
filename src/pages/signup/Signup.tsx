@@ -11,12 +11,14 @@ import {
   userRegisterService,
 } from "../../services/services";
 import Icon from "../../components/Icon";
+import Input from "../../components/Input";
+import SignupSuccess from "../../components/SignupSuccess";
+import resources from "../../data/resources.json";
 import styles from "./Signup.module.scss";
 
 interface Inputs {
-  name: string;
-  email: string;
-  password: string;
+  type: "name" | "email" | "password";
+  placeholder: string;
 }
 
 export default function Signup() {
@@ -24,6 +26,7 @@ export default function Signup() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [timeToRedirect, setTimeToRedirect] = useState(5);
   const navigate = useNavigate();
+  const inputs = resources.inputs as Inputs[];
 
   useEffect(() => {
     if (!isSuccess) return;
@@ -52,11 +55,11 @@ export default function Signup() {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<Inputs>({
+  } = useForm<RegisterPostData>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data: Inputs) => {
+  const onSubmit = async (data: RegisterPostData) => {
     try {
       await userRegisterService.post<RegisterPostData, UserRegisterResponse>(
         data,
@@ -73,29 +76,7 @@ export default function Signup() {
     <main className={styles.page}>
       <section className={styles.card} aria-labelledby="signup-heading">
         {isSuccess ? (
-          <>
-            <div className={styles.successContent} role="status">
-              <div className={styles.successIcon} aria-hidden="true">
-                ✓
-              </div>
-
-              <h2>Your account is ready!</h2>
-
-              <p>
-                Account created successfully.
-                <br />
-                Redirecting you to log in…
-              </p>
-            </div>
-
-            <p className={styles.redirectTimer} role="timer">
-              Redirecting in <span>{timeToRedirect}</span> seconds…
-            </p>
-
-            <NavLink className={styles.loginButton} to="/login">
-              Go to log in
-            </NavLink>
-          </>
+          <SignupSuccess styles={styles} redirectTimer={timeToRedirect} />
         ) : (
           <>
             <header className={styles.header}>
@@ -109,44 +90,17 @@ export default function Signup() {
               onSubmit={handleSubmit(onSubmit)}
               noValidate
             >
-              <div className={styles.field}>
-                <label htmlFor="name">Name</label>
-                <input
-                  id="name"
-                  type="text"
-                  placeholder="Your name"
-                  {...register("name")}
-                />
-                {errors.name && (
-                  <p className={styles.error}>{errors.name.message}</p>
-                )}
-              </div>
-
-              <div className={styles.field}>
-                <label htmlFor="email">Email address</label>
-                <input
-                  id="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  {...register("email")}
-                />
-                {errors.email && (
-                  <p className={styles.error}>{errors.email.message}</p>
-                )}
-              </div>
-
-              <div className={styles.field}>
-                <label htmlFor="password">Password</label>
-                <input
-                  id="password"
-                  type="password"
-                  placeholder="Create a password"
-                  {...register("password")}
-                />
-                {errors.password && (
-                  <p className={styles.error}>{errors.password.message}</p>
-                )}
-              </div>
+              {inputs.map(({ type, placeholder }) => (
+                <div className={styles.field}>
+                  <Input
+                    type={type}
+                    placeholder={placeholder}
+                    register={register}
+                    errors={errors}
+                    className={styles.error}
+                  />
+                </div>
+              ))}
 
               {error && <p className={styles.error}>{error}</p>}
 
