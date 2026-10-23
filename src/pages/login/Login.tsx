@@ -12,6 +12,7 @@ import Icon from "../../components/Icon";
 import styles from "./Login.module.scss";
 
 export default function Login() {
+  const [isLogginIn, setIsLogginIn] = useState(false);
   const [errors, setErrors] = useState({
     email: "",
     password: "",
@@ -24,18 +25,21 @@ export default function Login() {
   const auth = useContext(AuthContext);
 
   const callBackend = async (userData: UserPostData) => {
-    console.log("userData", userData);
+    setIsLogginIn(true);
+
     try {
       const { data } = await userLoginService.post<
         UserPostData,
         UserLoginResponse
       >(userData);
-      auth?.setCurrentUser(data);
 
-      sessionStorage.setItem("currentUser", JSON.stringify(data));
+      auth?.setCurrentUser(data);
+      setIsLogginIn(false);
     } catch (error) {
       if (isAxiosError(error))
         setErrors({ ...defaultErrors, apiError: error.response?.data.message });
+
+      setIsLogginIn(false);
     }
   };
 
@@ -120,9 +124,13 @@ export default function Login() {
 
           {errors.apiError && <p className={styles.error}>{errors.apiError}</p>}
 
-          <button className={styles.submitButton} type="submit">
+          <button
+            className={`${styles.submitButton} ${isLogginIn && styles.disable}`}
+            type="submit"
+            disabled={isLogginIn}
+          >
             <Icon label={FiLogIn} className={styles.loginIcon} />
-            <span>Log in</span>
+            <span>{isLogginIn ? "Loggin in" : "Log in"}</span>
           </button>
         </form>
 

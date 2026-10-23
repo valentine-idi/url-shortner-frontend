@@ -28,7 +28,6 @@ function NavBar() {
 
   const handleLogout = () => {
     auth?.setCurrentUser(null);
-    sessionStorage.removeItem("currentUser");
 
     navigate("/login", { replace: true });
   };
