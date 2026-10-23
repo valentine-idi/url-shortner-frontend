@@ -50,7 +50,7 @@ export default function Login() {
     return hasValue ? newErrors : null;
   };
 
-  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!emailRef.current || !passwordRef.current) return;
@@ -62,7 +62,7 @@ export default function Login() {
 
     if (inputErrors) return setErrors(inputErrors);
 
-    callBackend({ email, password });
+    await callBackend({ email, password });
   };
 
   return (

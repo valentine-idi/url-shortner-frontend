@@ -92,6 +92,7 @@ function UrlBox({ setRecentLinks }: Props) {
           ref={inputRef}
         />
         <button
+          type="submit"
           className={`${styles.submit} ${isBackendCalled && styles.disabled}`}
           disabled={isBackendCalled}
         >
