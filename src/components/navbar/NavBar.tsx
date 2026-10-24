@@ -1,19 +1,19 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { FaLink } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoLogInOutline } from "react-icons/io5";
 import { FiUserPlus } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
-import AuthContext from "../../contexts/AuthContext";
 import Icon from "../Icon";
 import styles from "./NavBar.module.scss";
+import useAuth from "../../hooks/useAuth";
 
 function NavBar() {
   const [showSmallMenu, setShowSmallMenu] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-  const auth = useContext(AuthContext);
+  const { currentUser, setCurrentUser } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function NavBar() {
   }, []);
 
   const handleLogout = () => {
-    auth?.setCurrentUser(null);
+    setCurrentUser(null);
 
     navigate("/login", { replace: true });
   };
@@ -46,7 +46,7 @@ function NavBar() {
         </ul>
 
         <ul className={`${styles.right} ${styles.navList}`}>
-          {auth?.currentUser ? (
+          {currentUser ? (
             <li
               className={`${styles.navItem} ${styles.bigMenuItem} ${styles.logout}`}
               onClick={handleLogout}
@@ -91,7 +91,7 @@ function NavBar() {
         className={`${styles.navBarSmall} ${showSmallMenu && isSmallScreen && styles.showSmallMenu} `}
       >
         <ul className={`${styles.right} ${styles.navList}`}>
-          {auth?.currentUser ? (
+          {currentUser ? (
             <li
               className={`${styles.navItem} ${styles.bigMenuItem}`}
               onClick={handleLogout}

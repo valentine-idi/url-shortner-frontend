@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import { Navigate, Outlet } from "react-router";
-import AuthContext from "../contexts/AuthContext";
+import useAuth from "../hooks/useAuth";
 
 const GuestRoute = () => {
-  const auth = useContext(AuthContext);
-  return auth?.currentUser ? <Navigate to="/" replace /> : <Outlet />;
+  const { currentUser } = useAuth();
+  return currentUser ? <Navigate to="/" replace /> : <Outlet />;
 };
 
 export default GuestRoute;

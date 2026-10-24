@@ -1,7 +1,7 @@
-import { useRef, useState, useContext } from "react";
+import { useRef, useState } from "react";
 import { isAxiosError } from "../../services/apiClient";
 import { NavLink } from "react-router";
-import AuthContext from "../../contexts/AuthContext";
+import useAuth from "../../hooks/useAuth";
 import {
   type UserPostData,
   type UserLoginResponse,
@@ -19,7 +19,7 @@ export default function Login() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  const auth = useContext(AuthContext);
+  const { setCurrentUser } = useAuth();
 
   const callBackend = async (userData: UserPostData) => {
     setIsLogginIn(true);
@@ -30,7 +30,7 @@ export default function Login() {
         UserLoginResponse
       >(userData);
 
-      auth?.setCurrentUser(data);
+      setCurrentUser(data);
       setIsLogginIn(false);
     } catch (error) {
       if (isAxiosError(error))
