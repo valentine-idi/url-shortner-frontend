@@ -7,20 +7,17 @@ import {
   type UserLoginResponse,
   userLoginService,
 } from "../../services/services";
-import { FiLink, FiLogIn, FiEye } from "react-icons/fi";
+import { FiLink, FiLogIn, FiEye, FiEyeOff } from "react-icons/fi";
 import Icon from "../../components/Icon";
 import styles from "./Login.module.scss";
 
 export default function Login() {
+  const defaultErrors = { email: "", password: "", apiError: "" };
   const [isLogginIn, setIsLogginIn] = useState(false);
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-    apiError: "",
-  });
+  const [errors, setErrors] = useState({ ...defaultErrors });
+  const [showPassword, setShowPassword] = useState(false);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const defaultErrors = { email: "", password: "", apiError: "" };
 
   const auth = useContext(AuthContext);
 
@@ -86,7 +83,6 @@ export default function Login() {
               name="email"
               type="text"
               placeholder="you@example.com"
-              autoComplete="email"
               ref={emailRef}
             />
             {errors.email && <p className={styles.error}>{errors.email}</p>}
@@ -99,9 +95,8 @@ export default function Login() {
               <input
                 id="password"
                 name="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
-                autoComplete="current-password"
                 ref={passwordRef}
               />
 
@@ -109,8 +104,12 @@ export default function Login() {
                 className={styles.passwordToggle}
                 type="button"
                 aria-label="Show password"
+                onClick={() => setShowPassword(!showPassword)}
               >
-                <Icon label={FiEye} className={styles.eyeIcon} />
+                <Icon
+                  label={showPassword ? FiEyeOff : FiEye}
+                  className={styles.eyeIcon}
+                />
               </button>
             </div>
             {errors.password && (
