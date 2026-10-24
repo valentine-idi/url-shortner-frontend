@@ -90,8 +90,8 @@ export default function Signup() {
               onSubmit={handleSubmit(onSubmit)}
               noValidate
             >
-              {inputs.map(({ type, placeholder }) => (
-                <div className={styles.field}>
+              {inputs.map(({ type, placeholder }, index) => (
+                <div className={styles.field} key={index}>
                   <Input
                     type={type}
                     placeholder={placeholder}
