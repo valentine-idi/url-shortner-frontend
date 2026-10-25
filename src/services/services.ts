@@ -10,7 +10,7 @@ export interface Data {
   shortCode: string;
   originalUrl: string;
   shortUrl: string;
-  user: string;
+  userId?: string;
 }
 
 export interface BackendPostData {
@@ -43,7 +43,6 @@ export interface UserPostData {
 export const userLoginService = new HttpService("/api/users/login");
 
 //userRegisterServivce
-
 export interface RegisterPostData extends UserPostData {
   name: string;
 }

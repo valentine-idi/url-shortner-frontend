@@ -47,14 +47,22 @@ function NavBar() {
 
         <ul className={`${styles.right} ${styles.navList}`}>
           {currentUser ? (
-            <li
-              className={`${styles.navItem} ${styles.bigMenuItem} ${styles.logout}`}
-              onClick={handleLogout}
-            >
-              <NavLink to="/" className={styles.navLink}>
-                Log out
-              </NavLink>
-            </li>
+            <>
+              <li className={`${styles.navItem} ${styles.bigMenuItem}`}>
+                <NavLink to="/links" className={styles.navLink}>
+                  My links
+                </NavLink>
+              </li>
+
+              <li
+                className={`${styles.navItem} ${styles.bigMenuItem} ${styles.logout}`}
+                onClick={handleLogout}
+              >
+                <NavLink to="/" className={styles.navLink}>
+                  Log out
+                </NavLink>
+              </li>
+            </>
           ) : (
             <>
               <li className={`${styles.navItem} ${styles.bigMenuItem}`}>
@@ -92,12 +100,20 @@ function NavBar() {
       >
         <ul className={`${styles.right} ${styles.navList}`}>
           {currentUser ? (
-            <li
-              className={`${styles.navItem} ${styles.bigMenuItem}`}
-              onClick={handleLogout}
-            >
-              <div className={`${styles.logout}`}>Logout</div>
-            </li>
+            <>
+              <li className={`${styles.navItem}`}>
+                <NavLink to="/links" className={styles.navLink}>
+                  My links
+                </NavLink>
+              </li>
+
+              <li
+                className={`${styles.navItem} ${styles.bigMenuItem}`}
+                onClick={handleLogout}
+              >
+                <div className={`${styles.logout}`}>Logout</div>
+              </li>
+            </>
           ) : (
             <>
               <li className={`${styles.navItem}`}>
