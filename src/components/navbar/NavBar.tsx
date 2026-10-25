@@ -5,9 +5,10 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoLogInOutline } from "react-icons/io5";
 import { FiUserPlus } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
+import useAuth from "../../hooks/useAuth";
+import { setAuthToken } from "../../services/apiClient";
 import Icon from "../Icon";
 import styles from "./NavBar.module.scss";
-import useAuth from "../../hooks/useAuth";
 
 function NavBar() {
   const [showSmallMenu, setShowSmallMenu] = useState(false);
@@ -28,6 +29,7 @@ function NavBar() {
 
   const handleLogout = () => {
     setCurrentUser(null);
+    setAuthToken(undefined);
 
     navigate("/login", { replace: true });
   };

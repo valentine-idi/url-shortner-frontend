@@ -13,10 +13,10 @@ interface Props {
 function LinkCard({ handleDelete, originalUrl, shortUrl }: Props) {
   const [copiedUrl, setCopiedUrl] = useState("");
 
-  const handleCopy = async (shortUrl: string) => {
+  const handleCopy = async (textToCopy: string) => {
     try {
-      await navigator.clipboard.writeText(shortUrl);
-      setCopiedUrl(shortUrl);
+      await navigator.clipboard.writeText(textToCopy);
+      setCopiedUrl(textToCopy);
 
       setTimeout(() => setCopiedUrl(""), 2000);
     } catch (error) {

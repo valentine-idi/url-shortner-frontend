@@ -4,8 +4,8 @@ import { FaCheck } from "react-icons/fa6";
 import { isAxiosError } from "../../services/apiClient";
 import {
   type BackendPostData,
-  shortenLinksService,
-  type Data,
+  linksService,
+  type linksServiceResponse,
 } from "../../services/services";
 import Icon from "../Icon";
 import isValidUrl from "../../utils/isValidUrl";
@@ -16,11 +16,11 @@ interface Error {
 }
 
 interface Props {
-  setRecentLinks: (data: Data) => void;
+  setRecentLinks: (data: linksServiceResponse) => void;
 }
 
 function UrlBox({ setRecentLinks }: Props) {
-  const [data, setData] = useState<Data | null>(null);
+  const [data, setData] = useState<linksServiceResponse | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [isBackendCalled, setIsBackendCalled] = useState(false);
   const [shortenButtonText, setShortenButtonText] = useState("Shorten Link");
@@ -33,7 +33,10 @@ function UrlBox({ setRecentLinks }: Props) {
       setIsBackendCalled(true);
       setShortenButtonText("Shortening...");
 
-      const { data } = await shortenLinksService.post<BackendPostData, Data>({
+      const { data } = await linksService.post<
+        BackendPostData,
+        linksServiceResponse
+      >({
         link: url,
       });
 

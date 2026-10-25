@@ -1,4 +1,4 @@
-import { type Data } from "../../services/services";
+import { type linksServiceResponse } from "../../services/services";
 import useGetRecentLinks from "../../hooks/useGetRecentLinks";
 import UrlBox from "../../components/urlBox";
 import RecentLinks from "../../components/recentLinks";
@@ -7,7 +7,7 @@ import styles from "./Home.module.scss";
 function Home() {
   const { recentLinks, setRecentLinks } = useGetRecentLinks();
 
-  const handleRecentLink = (data: Data) =>
+  const handleRecentLink = (data: linksServiceResponse) =>
     setRecentLinks((prevLinks) => (prevLinks ? [data, ...prevLinks] : [data]));
 
   const handleDelete = (shortUrl: string) =>

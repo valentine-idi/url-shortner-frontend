@@ -6,7 +6,8 @@ export interface ApiError {
 }
 
 // This is for ShortenLink
-export interface Data {
+export interface linksServiceResponse {
+  id: string;
   shortCode: string;
   originalUrl: string;
   shortUrl: string;
@@ -17,7 +18,7 @@ export interface BackendPostData {
   link: string;
 }
 
-export const shortenLinksService = new HttpService("/api/links");
+export const linksService = new HttpService("/api/links");
 
 //interface for userLoginService
 interface User {

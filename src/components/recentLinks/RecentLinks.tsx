@@ -1,9 +1,9 @@
 import LinkCard from "../linkCard/LinkCard";
-import { type Data } from "../../services/services";
+import { type linksServiceResponse } from "../../services/services";
 import styles from "./RecentLinks.module.scss";
 
 interface Props {
-  recentLinks: Data[];
+  recentLinks: linksServiceResponse[];
   handleDelete: (shortUrl: string) => void;
 }
 
@@ -16,6 +16,7 @@ function RecentLinks({ handleDelete, recentLinks }: Props) {
 
       {recentLinks?.map(({ originalUrl, shortUrl }) => (
         <LinkCard
+          key={shortUrl}
           originalUrl={originalUrl}
           shortUrl={shortUrl}
           handleDelete={handleDelete}
