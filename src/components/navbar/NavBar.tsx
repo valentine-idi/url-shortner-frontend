@@ -29,7 +29,7 @@ function NavBar() {
 
   const handleLogout = () => {
     setCurrentUser(null);
-    setAuthToken(undefined);
+    // setAuthToken(undefined);
 
     navigate("/login", { replace: true });
   };

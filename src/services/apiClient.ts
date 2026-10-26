@@ -2,16 +2,20 @@ import axios from "axios";
 
 export { isAxiosError } from "axios";
 
-const currentUser = sessionStorage.getItem("currentUser");
-
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
-  headers: {
-    ...(currentUser && {
-      Authorization: `Bearer ${JSON.parse(currentUser).token}`,
-    }),
-  },
 });
+
+// apiClient.interceptors.request.use((config) => {
+//   const savedUser = sessionStorage.getItem("currentUser");
+//   const currenUser = savedUser ? JSON.parse(savedUser) : null;
+
+//   if (currenUser.token)
+//     config.headers.set("Authorization", `Bearer ${currenUser.token}`);
+//   else config.headers.delete("Authorization");
+
+//   return config;
+// });
 
 export function setAuthToken(token: string | undefined) {
   if (token)

@@ -31,7 +31,7 @@ export default function Login() {
       >(userData);
 
       setCurrentUser(data);
-      setAuthToken(data.token);
+      // setAuthToken(data.token);
       setIsLogginIn(false);
     } catch (error) {
       if (isAxiosError(error))
