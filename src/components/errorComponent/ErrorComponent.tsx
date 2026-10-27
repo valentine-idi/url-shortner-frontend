@@ -1,6 +1,6 @@
 import { FiAlertCircle, FiRefreshCw } from "react-icons/fi";
 import Icon from "../Icon";
-import styles from "./Error.module.scss";
+import styles from "./ErrorComponent.module.scss";
 
 function ErrorComponent({
   title = "We couldn't load your links",
