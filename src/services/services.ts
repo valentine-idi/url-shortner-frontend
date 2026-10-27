@@ -7,7 +7,7 @@ export interface ApiError {
 }
 
 // This is for ShortenLink
-export interface linksServiceResponse {
+export interface LinksServiceResponse {
   id: string;
   shortCode: string;
   originalUrl: string;

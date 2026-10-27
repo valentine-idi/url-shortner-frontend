@@ -4,7 +4,7 @@ import styles from "./RecentLinks.module.scss";
 
 interface Props {
   recentLinks: linksServiceResponse[];
-  handleDelete: (shortUrl: string) => void;
+  handleDelete: (id: string) => void;
 }
 
 function RecentLinks({ handleDelete, recentLinks }: Props) {
@@ -14,8 +14,9 @@ function RecentLinks({ handleDelete, recentLinks }: Props) {
         <header className={styles.header}>Recent links</header>
       )}
 
-      {recentLinks?.map(({ originalUrl, shortUrl }) => (
+      {recentLinks?.map(({ id, originalUrl, shortUrl }) => (
         <LinkCard
+          id={id}
           key={shortUrl}
           originalUrl={originalUrl}
           shortUrl={shortUrl}

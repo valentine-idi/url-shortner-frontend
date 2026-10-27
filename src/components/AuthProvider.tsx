@@ -17,7 +17,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
       sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
     else sessionStorage.removeItem("currentUser");
   }, [currentUser]);
-  console.log("CurrentUserAuthProvider", currentUser);
+
   return (
     <AuthContext.Provider value={{ currentUser, setCurrentUser }}>
       {children}

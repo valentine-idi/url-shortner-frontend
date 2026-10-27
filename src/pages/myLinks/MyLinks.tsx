@@ -1,5 +1,11 @@
 import { NavLink } from "react-router";
 import { FiPlus, FiSearch } from "react-icons/fi";
+import { isAxiosError } from "../../services/apiClient";
+import setMessage from "../../utils/setMessage";
+import {
+  linksService,
+  type LinksServiceResponse,
+} from "../../services/services";
 import useGetLinks from "../../hooks/useGetLinks";
 import LoadingScreen from "../../components/loadingScreen";
 import LinkCard from "../../components/linkCard";
@@ -9,10 +15,27 @@ import EmptyLink from "../../components/emptyLink/EmptyLink";
 import styles from "./MyLinks.module.scss";
 
 export default function MyLinks() {
-  const { myLinks, isLoading, error } = useGetLinks();
+  const {
+    myLinks,
+    isLoading,
+    error,
+    setMyLinks,
+    statusMessage,
+    setStatusMessage,
+  } = useGetLinks();
 
-  const handleDelete = (shortUrl: string) => {
-    console.log("url", shortUrl);
+  const handleDelete = async (id: string) => {
+    const originalLinks = [...myLinks];
+
+    setMyLinks(myLinks.filter((link) => link.id !== id));
+    try {
+      await linksService.delete<LinksServiceResponse>(id);
+      setMessage("success", setStatusMessage, "Link deleted successfully");
+    } catch (error) {
+      if (isAxiosError(error))
+        setMessage("error", setStatusMessage, error.response?.data.message);
+      setMyLinks(originalLinks);
+    }
   };
 
   if (isLoading) return <LoadingScreen />;
@@ -51,8 +74,17 @@ export default function MyLinks() {
 
       <p className={styles.linkCount}>{myLinks.length} saved links</p>
 
-      {myLinks.map(({ shortUrl, originalUrl }) => (
+      {statusMessage.error && (
+        <p className={styles.error}>{statusMessage.error}</p>
+      )}
+
+      {statusMessage.success && (
+        <p className={styles.success}>{statusMessage.success}</p>
+      )}
+
+      {myLinks.map(({ id, shortUrl, originalUrl }) => (
         <LinkCard
+          id={id}
           key={shortUrl}
           handleDelete={handleDelete}
           shortUrl={shortUrl}

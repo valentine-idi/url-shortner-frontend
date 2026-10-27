@@ -10,8 +10,8 @@ function Home() {
   const handleRecentLink = (data: linksServiceResponse) =>
     setRecentLinks((prevLinks) => (prevLinks ? [data, ...prevLinks] : [data]));
 
-  const handleDelete = (shortUrl: string) =>
-    setRecentLinks(recentLinks.filter((link) => link.shortUrl !== shortUrl));
+  const handleDelete = (id: string) =>
+    setRecentLinks(recentLinks.filter((link) => link.id !== id));
 
   return (
     <div className={styles.container}>

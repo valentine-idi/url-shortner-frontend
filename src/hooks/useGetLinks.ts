@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
 import { isAxiosError } from "../services/apiClient";
-import { type linksServiceResponse, linksService } from "../services/services";
+import { type LinksServiceResponse, linksService } from "../services/services";
 
 function useGetLinks() {
-  const [myLinks, setMyLinks] = useState<linksServiceResponse[]>([]);
+  const [myLinks, setMyLinks] = useState<LinksServiceResponse[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [statusMessage, setStatusMessage] = useState({
+    error: "",
+    success: "",
+  });
 
   useEffect(() => {
     const controller = new AbortController();
 
     const getMyLinks = async () => {
       try {
-        const { data } = await linksService.get<linksServiceResponse[]>(
+        const { data } = await linksService.get<LinksServiceResponse[]>(
           controller.signal,
         );
 
@@ -31,9 +35,15 @@ function useGetLinks() {
     return () => controller.abort();
   }, []);
 
-  console.log("MyLinks", myLinks);
-
-  return { myLinks, isLoading, error };
+  return {
+    myLinks,
+    isLoading,
+    error,
+    setError,
+    setMyLinks,
+    statusMessage,
+    setStatusMessage,
+  };
 }
 
 export default useGetLinks;

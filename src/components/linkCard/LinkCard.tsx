@@ -5,12 +5,13 @@ import Icon from "../Icon";
 import styles from "./LinkCard.module.scss";
 
 interface Props {
-  handleDelete: (shortUrl: string) => void;
+  handleDelete: (identifier: string) => void;
+  id: string;
   originalUrl: string;
   shortUrl: string;
 }
 
-function LinkCard({ handleDelete, originalUrl, shortUrl }: Props) {
+function LinkCard({ id, handleDelete, originalUrl, shortUrl }: Props) {
   const [copiedUrl, setCopiedUrl] = useState("");
 
   const handleCopy = async (textToCopy: string) => {
@@ -42,7 +43,7 @@ function LinkCard({ handleDelete, originalUrl, shortUrl }: Props) {
         </button>
         <button
           className={`${styles.actionButton} ${styles.deleteButton}`}
-          onClick={() => handleDelete(shortUrl)}
+          onClick={() => handleDelete(id)}
         >
           <Icon label={AiOutlineDelete} className={styles.icon} />
         </button>

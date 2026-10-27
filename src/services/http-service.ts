@@ -18,4 +18,8 @@ export default class HttpService {
   post<TReq, TRes>(data: TReq) {
     return this.client.post<TRes>(this.url, data);
   }
+
+  delete<TRes>(id: string) {
+    return this.client.delete<TRes>(`${this.url}/${id}`);
+  }
 }
