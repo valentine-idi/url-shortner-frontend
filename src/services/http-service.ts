@@ -9,8 +9,10 @@ export default class HttpService {
     this.client = client;
   }
 
-  get<TRes>() {
-    return this.client.get<TRes>(this.url);
+  get<TRes>(signal?: AbortSignal) {
+    return this.client.get<TRes>(this.url, {
+      signal,
+    });
   }
 
   post<TReq, TRes>(data: TReq) {

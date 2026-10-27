@@ -1,11 +1,6 @@
-import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
 import { FiPlus, FiSearch } from "react-icons/fi";
-import { isAxiosError } from "../../services/apiClient";
-import {
-  type linksServiceResponse,
-  linksService,
-} from "../../services/services";
+import useGetLinks from "../../hooks/useGetLinks";
 import LoadingScreen from "../../components/loadingScreen";
 import LinkCard from "../../components/linkCard";
 import Error from "../../components/error";
@@ -14,26 +9,7 @@ import EmptyLink from "../../components/emptyLink/EmptyLink";
 import styles from "./MyLinks.module.scss";
 
 export default function MyLinks() {
-  const [myLinks, setMyLinks] = useState<linksServiceResponse[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    getMyLinks();
-  }, []);
-
-  const getMyLinks = async () => {
-    try {
-      setIsLoading(true);
-      const { data } = await linksService.get<linksServiceResponse[]>();
-      setMyLinks(data);
-      console.log("links", data);
-    } catch (error) {
-      if (isAxiosError(error)) setError(error.response?.data.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { myLinks, isLoading, error } = useGetLinks();
 
   const handleDelete = (shortUrl: string) => {
     console.log("url", shortUrl);
