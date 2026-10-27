@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
 import { FiPlus, FiSearch } from "react-icons/fi";
 import { isAxiosError } from "../../services/apiClient";
-import { setAuthToken } from "../../services/apiClient";
-import useAuth from "../../hooks/useAuth";
 import {
   type linksServiceResponse,
   linksService,
@@ -12,13 +10,13 @@ import LoadingScreen from "../../components/loadingScreen";
 import LinkCard from "../../components/linkCard";
 import Error from "../../components/error";
 import Icon from "../../components/Icon";
+import EmptyLink from "../../components/emptyLink/EmptyLink";
 import styles from "./MyLinks.module.scss";
 
 export default function MyLinks() {
   const [myLinks, setMyLinks] = useState<linksServiceResponse[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
-  const { currentUser } = useAuth();
 
   useEffect(() => {
     getMyLinks();
@@ -26,7 +24,6 @@ export default function MyLinks() {
 
   const getMyLinks = async () => {
     try {
-      //   setAuthToken(currentUser?.token);
       setIsLoading(true);
       const { data } = await linksService.get<linksServiceResponse[]>();
       setMyLinks(data);
@@ -45,6 +42,8 @@ export default function MyLinks() {
   if (isLoading) return <LoadingScreen />;
 
   if (error) return <Error message={error} />;
+
+  if (myLinks.length === 0) return <EmptyLink />;
 
   return (
     <main className={styles.page}>

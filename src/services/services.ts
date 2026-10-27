@@ -1,4 +1,5 @@
 import HttpService from "./http-service";
+import { publicClient } from "./apiClient";
 
 //Error
 export interface ApiError {
@@ -41,7 +42,10 @@ export interface UserPostData {
   password: string;
 }
 
-export const userLoginService = new HttpService("/api/users/login");
+export const userLoginService = new HttpService(
+  "/api/users/login",
+  publicClient,
+);
 
 //userRegisterServivce
 export interface RegisterPostData extends UserPostData {
@@ -52,4 +56,7 @@ export interface UserRegisterResponse extends UserPostData {
   id: string;
 }
 
-export const userRegisterService = new HttpService("/api/users/register");
+export const userRegisterService = new HttpService(
+  "/api/users/register",
+  publicClient,
+);

@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { isAxiosError, setAuthToken } from "../../services/apiClient";
+import { isAxiosError } from "../../services/apiClient";
 import { NavLink } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import {
@@ -31,7 +31,6 @@ export default function Login() {
       >(userData);
 
       setCurrentUser(data);
-      // setAuthToken(data.token);
       setIsLogginIn(false);
     } catch (error) {
       if (isAxiosError(error))
