@@ -2,7 +2,7 @@ import { FiAlertCircle, FiRefreshCw } from "react-icons/fi";
 import Icon from "../Icon";
 import styles from "./Error.module.scss";
 
-function Error({
+function ErrorComponent({
   title = "We couldn't load your links",
   message = "Something went wrong, Please try again",
 }: {
@@ -25,4 +25,4 @@ function Error({
   );
 }
 
-export default Error;
+export default ErrorComponent;

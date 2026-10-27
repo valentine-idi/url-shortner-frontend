@@ -25,6 +25,7 @@ function useGetLinks() {
         if (!controller.signal.aborted) setIsLoading(false);
       }
     };
+
     getMyLinks();
 
     return () => controller.abort();

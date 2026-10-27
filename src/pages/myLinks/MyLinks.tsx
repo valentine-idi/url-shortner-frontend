@@ -3,7 +3,7 @@ import { FiPlus, FiSearch } from "react-icons/fi";
 import useGetLinks from "../../hooks/useGetLinks";
 import LoadingScreen from "../../components/loadingScreen";
 import LinkCard from "../../components/linkCard";
-import Error from "../../components/error";
+import ErrorComponent from "../../components/errorComponent";
 import Icon from "../../components/Icon";
 import EmptyLink from "../../components/emptyLink/EmptyLink";
 import styles from "./MyLinks.module.scss";
@@ -17,7 +17,7 @@ export default function MyLinks() {
 
   if (isLoading) return <LoadingScreen />;
 
-  if (error) return <Error message={error} />;
+  if (error) return <ErrorComponent message={error} />;
 
   if (myLinks.length === 0) return <EmptyLink />;
 
