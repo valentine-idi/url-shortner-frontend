@@ -1,9 +1,9 @@
 import LinkCard from "../linkCard/LinkCard";
-import { type linksServiceResponse } from "../../services/services";
+import { type LinksServiceResponse } from "../../services/services";
 import styles from "./RecentLinks.module.scss";
 
 interface Props {
-  recentLinks: linksServiceResponse[];
+  recentLinks: LinksServiceResponse[];
   handleDelete: (id: string) => void;
 }
 

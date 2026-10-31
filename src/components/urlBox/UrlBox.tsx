@@ -5,7 +5,7 @@ import { isAxiosError } from "../../services/apiClient";
 import {
   type BackendPostData,
   linksService,
-  type linksServiceResponse,
+  type LinksServiceResponse,
 } from "../../services/services";
 import Icon from "../Icon";
 import isValidUrl from "../../utils/isValidUrl";
@@ -16,11 +16,11 @@ interface Error {
 }
 
 interface Props {
-  setRecentLinks: (data: linksServiceResponse) => void;
+  setRecentLinks: (data: LinksServiceResponse) => void;
 }
 
 function UrlBox({ setRecentLinks }: Props) {
-  const [data, setData] = useState<linksServiceResponse | null>(null);
+  const [data, setData] = useState<LinksServiceResponse | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [isBackendCalled, setIsBackendCalled] = useState(false);
   const [shortenButtonText, setShortenButtonText] = useState("Shorten Link");
@@ -35,7 +35,7 @@ function UrlBox({ setRecentLinks }: Props) {
 
       const { data } = await linksService.post<
         BackendPostData,
-        linksServiceResponse
+        LinksServiceResponse
       >({
         link: url,
       });

@@ -116,7 +116,7 @@ export default function MyLinks() {
         />
       ))}
 
-      {myLinks.length > pageSize && (
+      {paginationArray.length > 1 && (
         <Pagination
           paginationArray={paginationArray}
           pageNumber={pageNumber}
