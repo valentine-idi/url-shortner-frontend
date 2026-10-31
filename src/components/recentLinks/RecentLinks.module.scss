@@ -3,4 +3,27 @@
     font-size: clamp(14px, 3vw, 22px);
     font-weight: 600;
   }
+
+  .emptyRecentLinks {
+    margin-top: 15px;
+    padding: 32px 20px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    background: #ffffff;
+    text-align: center;
+
+    h3 {
+      margin: 0 0 8px;
+      color: #0f172a;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0;
+      color: #64748b;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+  }
 }

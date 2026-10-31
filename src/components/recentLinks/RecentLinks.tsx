@@ -10,8 +10,13 @@ interface Props {
 function RecentLinks({ handleDelete, recentLinks }: Props) {
   return (
     <div className={styles.container}>
-      {recentLinks.length > 0 && (
-        <header className={styles.header}>Recent links</header>
+      <header className={styles.header}>Recent links</header>
+
+      {recentLinks.length < 1 && (
+        <div className={styles.emptyRecentLinks}>
+          <h3>No recent links yet</h3>
+          <p>Shorten your first URL above to see it here.</p>
+        </div>
       )}
 
       {recentLinks?.map(({ id, originalUrl, shortUrl }) => (

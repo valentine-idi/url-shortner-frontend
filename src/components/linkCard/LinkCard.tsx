@@ -29,7 +29,11 @@ function LinkCard({ id, handleDelete, originalUrl, shortUrl }: Props) {
     <div className={styles.card} key={shortUrl}>
       <div className={styles.links}>
         <div className={styles.originalUrl}>{originalUrl}</div>
-        <div className={styles.shortUrl}>{shortUrl}</div>
+        <div className={styles.shortUrl}>
+          <a href={shortUrl} target="_blank">
+            {shortUrl}
+          </a>
+        </div>
       </div>
       <div className={styles.buttons}>
         <button
