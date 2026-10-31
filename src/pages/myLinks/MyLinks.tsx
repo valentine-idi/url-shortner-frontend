@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { NavLink } from "react-router";
 import { FiPlus, FiSearch } from "react-icons/fi";
 import { isAxiosError } from "../../services/apiClient";
@@ -13,8 +14,11 @@ import ErrorComponent from "../../components/errorComponent";
 import Icon from "../../components/Icon";
 import EmptyLink from "../../components/emptyLink/EmptyLink";
 import styles from "./MyLinks.module.scss";
+import Pagination from "../../components/pagination";
 
 export default function MyLinks() {
+  const [pageNumber, setPageNumber] = useState(1);
+
   const {
     myLinks,
     isLoading,
@@ -23,6 +27,26 @@ export default function MyLinks() {
     statusMessage,
     setStatusMessage,
   } = useGetLinks();
+
+  const pageSize = 5;
+  const paginationSize = Math.ceil(myLinks.length / pageSize);
+  const paginationArray = Array.from(
+    { length: paginationSize },
+    (_, i) => i + 1,
+  );
+
+  const start = (pageNumber - 1) * pageSize;
+  const end = start + pageSize;
+
+  const slicedLinks = myLinks.slice(start, end);
+
+  const handlePageChange = (pageNumber: number) => {
+    setPageNumber(pageNumber);
+  };
+
+  const handleChangePageNumber = (increaseBy: 1 | -1) => {
+    setPageNumber((prev) => prev + increaseBy);
+  };
 
   const handleDelete = async (id: string) => {
     const originalLinks = [...myLinks];
@@ -82,7 +106,7 @@ export default function MyLinks() {
         <p className={styles.success}>{statusMessage.success}</p>
       )}
 
-      {myLinks.map(({ id, shortUrl, originalUrl }) => (
+      {slicedLinks.map(({ id, shortUrl, originalUrl }) => (
         <LinkCard
           id={id}
           key={shortUrl}
@@ -91,6 +115,15 @@ export default function MyLinks() {
           originalUrl={originalUrl}
         />
       ))}
+
+      {myLinks.length > pageSize && (
+        <Pagination
+          paginationArray={paginationArray}
+          pageNumber={pageNumber}
+          changePage={handlePageChange}
+          changePageNumber={handleChangePageNumber}
+        />
+      )}
     </main>
   );
 }
